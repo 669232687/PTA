@@ -19,7 +19,7 @@ def comment(a):
             name=i.find_element_by_class_name('user').find_element_by_tag_name('a').text
             reply_content=i.find_element_by_class_name('text').text
             reply_time=i.find_element_by_class_name('time').text
-            with open('D://私たちは勉強ができない1.txt','a+',encoding='utf-8') as f:
+            with open('D://1.txt','a+',encoding='utf-8') as f:
                 f.write("ID: "+name+" \ntime: "+str(reply_time)+'\n')
                 f.write("评论：\n"+reply_content+'\n\n')
                 print("写入成功",num)
