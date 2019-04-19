@@ -1,0 +1,18 @@
+a,b=input().split()
+a,b=int(a),int(b)
+num=input().split()
+while b>=a:
+    b-=a
+while b!=0:
+    d=num[0]
+    for i,j in enumerate(num):
+        c=num[(i+1)%a]
+        num[(i+1)%a]=d
+        d=c
+
+    b-=1
+n=''
+for i in num:
+    n+=i+" "
+print(n[:-1])
+
