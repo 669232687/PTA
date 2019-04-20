@@ -1,0 +1,18 @@
+stu_num,jige_grade,yuxiu_grade=map(int,input().split())
+a1=[]
+for i in range(stu_num):
+    a,b,c=map(int,input().split())
+    if (b>=yuxiu_grade and c>=yuxiu_grade):
+        a1.append([a,b,c,b+c,1])
+    elif b>=yuxiu_grade and jige_grade<=c<yuxiu_grade:
+        a1.append([a,b,c,b+c,2])
+    elif jige_grade<=b<yuxiu_grade and jige_grade<=c<yuxiu_grade and b>=c:
+        a1.append([a,b,c,b+c,3])
+    elif jige_grade<=b<yuxiu_grade  and b<c:
+        a1.append([a,b,c,b+c,4])
+a1.sort(key=lambda x:(x[4],-x[3],-x[1],x[0]))#-x[3]表示降序排列
+print(len(a1))
+for j in a1:
+        print(j[0], j[1], j[2])
+        
+        
