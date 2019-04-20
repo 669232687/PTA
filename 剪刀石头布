@@ -1,0 +1,36 @@
+a = int( input())
+cjb = []
+while a != 0:
+    c,d = input().split()
+    cjb.append([c, d])
+    a-=1
+p1 = 0
+p2 = 0
+p3 = 0
+jia_1={
+    "B":0,
+    "C":0,
+    "J":0,
+}
+yi_3={
+    "B":0,
+    "C":0,
+    "J":0,
+}
+for a in cjb:
+    if (a[0] == 'J' and a[1] == "B") or (a[0] == 'B' and a[1] == "C") \
+            or (a[0] == 'C' and a[1] == "J"):
+        p1 += 1
+        jia_1[a[0]]+=1
+
+    elif a[0] == a[1]:
+        p2 += 1
+    else:
+        p3 += 1
+        yi_3[a[1]] += 1
+
+print(p1,p2,p3)
+print(p3,p2,p1)
+jia_ying=sorted(jia_1.items(),key=lambda x:(-x[1],x[0]))
+yi_ying=sorted(yi_3.items(),key=lambda x:(-x[1],x[0]))
+print(jia_ying[0][0],yi_ying[0][0])
