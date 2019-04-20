@@ -1,0 +1,54 @@
+from math import sqrt
+#总有一题运行超时
+import time
+
+a1,b=map(int,input().split())
+d=b
+
+def a():
+  global b
+  c=5
+  yield 2
+
+  yield 3
+  while b>2:
+    flag = 1
+    if c%6!=5 and c%6!=1:
+        c+=2
+        continue
+    sqrt1=int(sqrt(c))
+    for i in range(2, sqrt1 + 1):
+        if c % i == 0:
+            flag=0
+            break
+    if flag==0:
+        c+=2
+        continue
+    b -= 1
+    c += 2
+    yield c-2
+
+index=0
+e=1
+
+for i in a():
+
+    if e>=a1 :
+        if e==d:
+            print(i,end='')
+            break
+        if index!=9:
+            print(i,end=" ")
+            index += 1
+            e+=1
+            continue
+        if index==9:
+            print(i)
+            index=0
+            e+=1
+            continue
+    e+=1
+
+
+
+
