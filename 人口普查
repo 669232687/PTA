@@ -1,0 +1,16 @@
+num=int(input())
+youxiang=0  #合理生日
+min,max=['','1814/09/06'],['','2014/09/06'] #最早与最晚出生日期
+while num!=0:
+    a,b=input().split()  #a=name ,b=birthday
+    if '2014/09/06'>=b>='1814/09/06' :
+        youxiang += 1
+        if b<max[1]:
+            max=[a,b]
+        if b>min[1]:
+            min=[a,b]
+    num-=1
+if youxiang==0:  #生日都不合理
+    print(0)
+else:
+    print(youxiang,max[0],min[0])
