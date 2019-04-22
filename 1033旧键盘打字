@@ -1,0 +1,10 @@
+broken_key=input()
+input_keys=input()
+output=input_keys
+for j in broken_key:
+    for i in input_keys:
+        if i==j or i.upper()==j:
+            output=output.replace(i,'')
+        if j=='+' and i.isupper():
+            output=output.replace(i,'')
+print(output)
