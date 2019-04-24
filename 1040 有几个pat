@@ -7,7 +7,7 @@ int main()
     long long sum = 0;
     string list;
     cin>>list;
-    for (int i = 0,p=0,a=0; i < list.size(); ++i)
+    for (int i = 0,p=0,a=0; i < list.size(); ++i) //判断T前面有多少PA，PA的个数等于每个A前面P的数目之和。每个T前面的PA的和为PAT的个数。
     {
         if (list[i] == 'P')
         {
