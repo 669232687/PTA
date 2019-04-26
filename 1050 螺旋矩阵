@@ -1,0 +1,98 @@
+#include<iostream>
+#include<algorithm>
+
+using namespace std;
+int cmp(int a[],int b[]){ //按数字大小从打到小排列
+    return a[0]>b[0];
+}
+int cmp1(int *a,int *b){  //按位置从小到大排列
+        return a[1]<b[1];
+}
+int main(){
+    int N,i,m=0,n=0;
+    cin>>N;
+    int ** number=new int*[N];
+     for(i=0;i<N;i++)
+        number[i]=new int [2]; //第一个储存数字，第二个为位置
+    for(i=0;i<N;i++){
+        cin>>number[i][0];
+        number[i][1]=0;
+    }
+    int f,g,min=10000;  //f,g记录 行列的值，如果行列值的差最小，则n=f,,m=g; n<m;
+    sort(number,(number+N),cmp);
+    for(i=1;i<=N;i++){
+   
+      if(N%i==0){
+        f=i;
+        g=N/i;
+        if(0<=g-f && g-f<min){
+          n=f;
+          m=g;
+          min=m-n;
+        }
+      }
+      
+    }
+    int flag=0,j=1,column=n;   //每转一个弯，m ,n的值相应减一。每四个弯一个循环。
+    for(i=0;i<N;i++){
+      if (flag==0){
+        if (i==0){
+          number[0][1]=1;
+          j++;}
+        else{
+        number[i][1]=number[i-1][1]+1;  
+        j++;
+        }
+        if(j==n+1){
+          flag=1;
+          m--;
+          j=1;
+        }
+      }
+      else if(flag==1){
+        number[i][1]=number[i-1][1]+column;
+        j++;
+        if(j==m+1){
+            flag=2;
+            n--;
+            j=1;
+        }
+      }
+      else if(flag==2){
+        number[i][1]=number[i-1][1]-1;
+        j++;
+        if(j==n+1){
+            flag=3;
+            m--;
+            j=1;
+        }
+      }
+      else{
+        number[i][1]=number[i-1][1]-column;
+        j++;
+        if(j==m+1){
+            flag=0;
+            n--;
+            j=1;
+        }
+
+      }
+
+    }
+    sort(number, number+N,cmp1); 
+     for(i=0;i<N;i++)
+     {
+       if (i%column==0){
+          cout<<number[i][0];
+          
+       }
+        else{
+          cout<<' '<<number[i][0];
+          }
+        if (i%column==column-1)
+        cout<<endl;
+     }
+      
+   
+    system("pause");
+}
