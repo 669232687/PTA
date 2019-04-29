@@ -1,3 +1,1 @@
-# hello-world
-第一个项目
-2019/4/19
+用C ++和Python解决PTA算法
