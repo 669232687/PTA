@@ -1,0 +1,50 @@
+a = list(input())  #进制
+b = list(input())  
+c = list(input())
+if len(b) > len(c):   #使 b和c的长度相同
+    c = ['0'] * (len(b) - len(c)) + c 
+else:
+    b = ['0'] * (-len(b) + len(c)) + b
+if len(b)>20:       # 把超过20位的进制设为10,0代表10
+    a=['0']*100+a
+sum = ''    #相加的和
+i = len(b) - 1  # 从最后一位开始相加
+j=len(a)-1   #取进制的最后一位。判断b和c的和有没有超过a[j]
+while i >= 0:
+    d = int(b[i]) + int(c[i])  #和
+    if i == 0:  #如果是首位
+        if a[j]=='0':   #进制是10
+            if d>=10:    #和>10
+                sum += str(d - (d//10)*10)+str(d//10)  
+            else:
+                sum+=str(d)   #和<10
+        else:      #进制不是10
+            if d>=int(a[j]):   #和不为10
+                sum+=str(d - (d//int(a[j]))*int(a[j]))+str(d//int(a[j]))
+            else:   
+                sum += str(d)
+        break
+    if int(a[j]) != 0:  #不是首位
+            if int(a[j]) <= d:
+                sum += str(d - (d//int(a[j]))*int(a[j])) #当前位置和的计算
+                b[i - 1] = str(int(b[i - 1]) + d//int(a[j])) #前一位加上当前的进位
+            else:
+                sum += str(d)
+    if (a[j] == '0'):
+            if d >= 10:
+                sum += str(d - (d//10)*10)
+                b[i - 1] = str(int(b[i - 1]) + d//10)
+            else:
+                sum += str(d)
+    i -= 1  #位数向首位减
+    j-=1  #进制位跟随b,c的位数
+if sum.count('0')==len(sum): #如果结果全是0 ，最后一个测试点
+    print(0)
+    exit(0)
+flag=1
+for i in sum[::-1]:  #sum逆向输出，开始的0省略
+    if i=='0' and flag:
+        continue
+    if i!='0':
+        flag=0
+    print(i,end='')
