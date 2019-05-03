@@ -1,0 +1,27 @@
+first, N, K = input().split()  #首地址，结点个数，分界值
+all_points = {}
+K = int(K) 
+for i in range(int(N)):  #字典存储，key为地址，value为节点的值和next 地址  
+    b = input().split()
+    all_points[b[0]] = b[1:]
+new_sort_points1 = []
+new_sort_points2 = []
+new_sort_points3 = []
+for i in range(int(N)):    #按地址查找结点并分类 
+    value = all_points[first]
+    if int(value[0]) < 0: 
+        new_sort_points1.append([first, value])
+    elif 0 <= int(value[0]) <= K:  
+        new_sort_points2.append([first, value])
+    else:
+        new_sort_points3.append([first, value])
+    first=value[1]
+    if first == '-1':
+        break
+new_sort_points = new_sort_points1 + new_sort_points2 + new_sort_points3
+for i in range(0, len(new_sort_points) - 1):  #输出结点除最后一个结点
+    new_sort_points[i][1][1] = new_sort_points[i + 1][0]
+    j = new_sort_points[i]
+    print("%s %s %s" % (j[0], j[1][0], j[1][1]))
+j = new_sort_points[-1]    #输出最后一个结点，next=‘-1’
+print("%s %s %s" % (j[0], j[1][0], '-1'))
