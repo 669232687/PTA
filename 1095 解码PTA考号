@@ -1,0 +1,95 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+using namespace std;
+struct node    //学生结构体
+{
+    string id;
+    int score;
+};
+bool cmp(struct node a, struct node b)   //先按成绩降序，再按学号升序
+{ 
+    return a.score != b.score ? a.score > b.score : a.id < b.id;
+}
+
+int main()
+{
+    int M, N;  //学生数和查询的次数
+    cin >> M >> N;
+    vector<node> stu(M); //学生的动态数组
+    for (int i = 0; i < M; i++)
+    {
+        cin >> stu[i].id >> stu[i].score;
+    }
+
+    for (int i = 1; i <= N; i++)
+    {
+        int type;     //类型
+        string order;   //指令
+        cin >> type >> order;
+        vector<node> temp;
+        if (type == 1)
+        {
+            printf("Case %d: %d %s\n", i, type, order.c_str()); //c_str()就是将C++的string转化为C的字符串数组
+            for (int j = 0; j < M; j++)
+            {
+                if (stu[j].id[0] == order[0])  //不能比较一个字符和字符串
+                {
+                    temp.push_back(stu[j]); //追加一个结构体
+                }
+            }
+            sort(temp.begin(), temp.end(), cmp);
+            if (temp.size() == 0)
+            {
+                printf("NA\n");
+                continue;
+            }
+            for (int j = 0; j < temp.size(); j++)
+                printf("%s %d\n", temp[j].id.c_str(), temp[j].score);
+        }
+        else if (type == 2)
+        {
+            printf("Case %d: %d %s\n", i, type, order.c_str());
+            int count = 0, sum_score = 0;
+            for (int j = 0; j < M; j++)
+            {
+                if (stu[j].id.substr(1, 3) == order)  //string.substr(pos,length)   比如a.substr(1,2) 取a字符串下标为1开始的两个字符
+                {
+                    count++;
+                    sum_score += stu[j].score;
+                }
+            }
+            if (count == 0)
+            {
+                printf("NA\n");
+                continue;
+            }
+            printf("%d %d\n", count, sum_score);
+        }
+        else
+        {
+            printf("Case %d: %d %s\n", i, type, order.c_str());
+            unordered_map<string, int> dict;   //相当于字典dict， 不会自动排序。
+            for (int j = 0; j < M; j++)
+            {
+                if (stu[j].id.substr(4, 6) == order)
+                {
+                    dict[stu[j].id.substr(1, 3)]++;
+                }
+            }
+            for (auto it : dict)
+                temp.push_back({it.first, it.second});
+            sort(temp.begin(), temp.end(), cmp);
+            if (temp.size() == 0)
+            {
+                printf("NA\n");
+                continue;
+            }
+            for (int j = 0; j < temp.size(); j++)
+                printf("%s %d\n", temp[j].id.c_str(), temp[j].score);
+        }
+    }
+    system("pause");
+}
