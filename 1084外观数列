@@ -1,0 +1,35 @@
+#include <iostream>
+#include <map>
+#include <math.h>
+#include <set>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+int main()
+{
+    string a, new_a ;
+    int N;
+    cin >> a >> N;
+    a += 'a'; //添加一个字符防止越界
+    for (int i = 1; i < N; i++) //许要求N-1此数列
+    {
+        int count = 1;  //相同字符的数量
+        for (int j = 1; j < a.length(); j++) //不用
+        {
+            if (a[j - 1] == a[j])//当前字符与前一字符相同则计数加1
+                count++;
+            else
+            {
+                new_a += a[j - 1]; //不相同则写入新数列的字符和它的计数
+                new_a += char(count + 48);
+                count = 1;
+            }
+        }
+        a = new_a + 'a'; 
+        new_a = "";
+    }
+    cout << a.substr(0, a.length() - 1); //输出不包括a的字符
+    system("pause");
+    return 0;
+}
