@@ -1,0 +1,41 @@
+#include<iostream>
+#include<map>
+#include<math.h>
+using namespace std;
+int isPrime(int num){
+    if(num<1)
+        return 0;
+    double s=sqrt(num);
+    for(int i=2;i<=s;i++){
+        if (num%i==0)
+            return 0;
+    }
+    return 1;
+}
+int main(){
+   int N,M;
+   cin>>N>>M;
+   int num=1,index=1;
+   for(int i=2;;i++){
+       if(isPrime(i)){
+           if(num>M)
+            break;
+           if(num>=N){
+               if(index==1)
+                cout<<i;
+               else if(index!=10)
+                cout<<' '<<i;
+                else
+                {
+                    cout<<' '<<i<<endl;
+                    index=0;
+                }
+                index++;
+           }
+            num++;
+       }
+
+   }
+   system("pause");
+
+}
