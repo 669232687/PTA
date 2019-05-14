@@ -1,0 +1,50 @@
+#include <iostream>
+#include <map>
+#include <math.h>
+#include <set>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+int main()
+{
+ /*题目中的 PAT 分布是有规律可寻的，即把A分成三部分：P前面  *  P和T中间  =  T后面
+
+例如：
+
+PAT    0 * 1 = 0
+
+PAAT    0 * 2 = 0
+
+AAPATAA   2 * 1 = 2
+
+AAPAATAAAA      2 * 2 = 4
+
+*/
+    int N;
+    cin>>N;
+    for(int i=0;i<N;i++){
+        string string1;
+        cin>>string1;
+        int P=0,T=0,flag=1; //用P和T记录字符串中P和T所在位置
+        string PTA="PAT";
+        for(int j=0;j<string1.length();j++){
+            if(PTA.find(string1[j])==-1){
+                cout<<"NO"<<endl;
+                flag=0;
+                break;
+            }
+            if (string1[j]=='P')
+                P=j;
+            else if (string1[j]=='T')
+               T=j;     
+        }
+        if((P-0)*(T-P-1)==string1.length()-T-1 &&T-P!=1)
+            cout<<"YES"<<endl;
+        else if(flag==1)
+            cout<<"NO"<<endl;
+
+    }
+    system("pause");
+    return 0;
+}
