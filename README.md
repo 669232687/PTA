@@ -1,1 +1,1 @@
-用C ++和Python解决PTA问题
+用C ++或Python解决PTA问题
