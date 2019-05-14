@@ -1,0 +1,90 @@
+#include <iostream>
+#include <map>
+#include <math.h>
+#include <set>
+#include <string>
+#include <algorithm>
+#include <vector>
+using namespace std;
+struct answers
+{
+    double grade; //每一题的分值
+    int answer_num;  //每一题的答案个数
+    int right_answer_num;//每一题所有正确的答案个数
+    string answer;  //正确答案组成的string
+};
+int main()
+{
+    int N, M;
+    cin >> N >> M;
+    answers answers[M + 1]; //M个问题，第0个弃用
+    for (int i = 1; i <= M; i++)
+    {
+        cin >> answers[i].grade >> answers[i].answer_num >> answers[i].right_answer_num;//输入每题的信息
+        char a;
+        for (int j = 0; j < answers[i].right_answer_num; j++)
+        {
+            cin >> a; //将正确答案组成字符串
+            answers[i].answer += a;
+        }
+    }
+    vector<vector<int>> wrong_anwer(M + 1, vector<int>(5, 0)); //每一题的每一个答案错误的次数
+    int wrong_most = 0;  //错得最多的次数
+    for (int i = 1; i <= N; i++)
+    {
+        double grade = 0;  //每个学生的成绩
+        for (int j = 1; j <= M; j++)
+        {
+            int flag = 1;  //记录有没有错误答案，
+            int student_answer_num;  //该学生每一题的答案的个数
+            scanf(" "); //便于（的输入
+            scanf("(%d", &student_answer_num); 
+            string student_answer; //学生每一题答案组成的string
+            for (int n = 0; n < student_answer_num; n++)
+            {
+                char a;
+                cin >> a;
+                student_answer += a;
+            }
+            scanf(")");  
+            if (student_answer == answers[j].answer) //如果学生答案等于标准答案，加上这题的全部分数
+                grade += answers[j].grade;
+            else
+            {
+                for (int m = 0; m < student_answer.length(); m++) //如果学生答案中包含错误答案，flag=0,此题不得分
+                {
+                    if (answers[j].answer.find(student_answer[m]) == -1)
+                    {
+                        flag = 0;
+                        wrong_anwer[j][student_answer[m] - 'a']++;  //错得选项错误次数加1
+                        if (wrong_anwer[j][student_answer[m] - 'a'] > wrong_most)
+                            wrong_most = wrong_anwer[j][student_answer[m] - 'a']; //保存最大错误次数
+                    }
+                }  
+                for (int m = 0; m < answers[j].answer.length(); m++)//查找学生少选的正确答案。
+                {
+                    if (student_answer.find(answers[j].answer[m]) == -1) //少选的答案错误次数加1
+                    {
+                        wrong_anwer[j][answers[j].answer[m] - 'a']++;
+                        if (wrong_anwer[j][answers[j].answer[m] - 'a'] > wrong_most)
+                            wrong_most = wrong_anwer[j][answers[j].answer[m] - 'a'];
+                    }
+                }
+                if (flag != 0)
+                    grade += answers[j].grade / 2.0;  //如果没有错选，加一半分
+            }
+        }
+        printf("%.1f\n", grade);
+    }
+    if (wrong_most)  //如果有错误选 项
+    {
+        for (int i = 1; i < M + 1; i++)
+            for (int j = 0; j < 5; j++)
+                if (wrong_anwer[i][j] == wrong_most) //如果此选项错误次数等于最大错误次数
+                    cout << wrong_most << ' ' << i << '-' << char(j + 'a') << endl;
+    }
+
+    else
+        cout << "Too simple"; //无错误选项
+    system("pause");
+}
